@@ -1,13 +1,20 @@
-{% load staticfiles %}
+{% extends "frontoffice/base.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'frontoffice/style.css' %}" />
+{% block includeAtEndOfHead %}
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'frontoffice/style.css' %}" />
+{% endblock %}
 
-{% if vacatures %}
-    <ul>
-    {% for vacature in vacatures %}
-    	<li><a href="{% url 'frontoffice:detail' vacature.slug %}">{{ vacature.content.titel }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Geen vacatures gevonden.</p>
-{% endif %}
+{% block content %}
+	<h1>Gevonden vacatures</h1>
+
+	{% if vacatures %}
+	    <ul>
+	    {% for vacature in vacatures %}
+	    	<li><a href="{% url 'frontoffice:detail' vacature.slug %}">{{ vacature.titel }}</a></li>
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>Geen vacatures gevonden.</p>
+	{% endif %}
+{% endblock %}

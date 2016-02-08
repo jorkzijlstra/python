@@ -1,0 +1,15 @@
+{% extends "frontoffice/base.html" %}
+
+{% block includeAtEndOfHead %}
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'frontoffice/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+	{% if vacature %}
+		<h1>{{ vacature.titel }}</h1>
+		<p>{{ vacature.omschrijving }}</p>
+	{% else %}
+	    <p>Vacature niet gevonden.</p>
+	{% endif %}
+{% endblock %}
