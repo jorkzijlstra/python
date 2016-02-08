@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'frontoffice/style.css' %}" />
+
+{% if vacatures %}
+    <ul>
+    {% for vacature in vacatures %}
+    	<li><a href="{% url 'frontoffice:detail' vacature.slug %}">{{ vacature.content.titel }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Geen vacatures gevonden.</p>
+{% endif %}
