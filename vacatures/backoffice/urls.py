@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+#app_name = 'backoffice'
 urlpatterns = [
-    url(r'^beheer/', include('backoffice.urls')),
-    url(r'^', include('frontoffice.urls'))
+    url(r'^', admin.site.urls),
 ]
