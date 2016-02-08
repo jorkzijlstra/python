@@ -1,19 +1,24 @@
 from django.contrib import admin
 
 from .models import Vacature
+from django.utils import timezone
+from frontoffice.actions import publishToFrontOffice, removeFromFrontOffice
 
-#class VacatureContentAdmin(admin.StackedInline):
-#    model = VacatureContent
-#    fields = ['titel', 'omschrijving']
-
-
+def publish(modeladmin, request, queryset):
+    queryset.update(datePublished = timezone.now())
+    for vacature in queryset:
+        publishToFrontOffice(vacature)
+        
+def unPublish(modeladmin, request, queryset):
+    queryset.update(datePublished = None)
+    for vacature in queryset:
+        removeFromFrontOffice(vacature)
+    
 class VacatureAdmin(admin.ModelAdmin):
-    list_display = ['titel', 'slug']
-    #inlines = [VacatureContentAdmin]
+    list_display = ['titel', 'slug', 'is_published']
+    actions = [publish, unPublish]
 
-    #def titel(self, obj):
-    #    return '%s'%(obj.VacatureContent.titel)
+publish.short_description = "Toevoegen op frontoffice"
+unPublish.short_description = "Verwijder op frontoffice"
 
-# Register your models here.
 admin.site.register(Vacature, VacatureAdmin)
-#admin.site.register(VacatureContent)
