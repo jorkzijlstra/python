@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODULE = 'backoffice.UserWithOrganisation'
 
 # Application definition
 

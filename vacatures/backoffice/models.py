@@ -5,10 +5,35 @@ from autoslug import AutoSlugField
 from django.template.defaultfilters import slugify
 import uuid
 from uuid import UUID
-from utils import string_to_uuid
+from backoffice.common.utils import string_to_uuid
 from pprint import pprint
 from backoffice.common.enumerations import JobBranches, Organisations
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
+class Organisation(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable = False)
+    titel = models.CharField(max_length=250)
+    permalink = models.SlugField(null = False, blank = False, editable=False)
+    dateCreated = models.DateTimeField(auto_now=True, editable = False)
+    dateUpdated = models.DateTimeField(null=True, blank=True, editable = False)
+    
+    def __str__(self):
+        return str(self.titel)
+    
+    def save(self, *args, **kwargs):
+        if not self.permalink:
+            self.permaLink = slugify(self.titel)
+        
+        super(Organisation, self).save()
+
+class UserWithOrganisation(models.Model):  
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  
+    organisation = models.CharField(max_length=8, choices=Organisations.choices())
+    
+    def __str__(self):
+        return str(self.organisation)
 
 class Vacature(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable = False)
