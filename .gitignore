@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 environment
+*.sqllite3
 
 .project
 .pydevproject
