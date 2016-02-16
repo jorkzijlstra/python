@@ -7,6 +7,7 @@ import uuid
 from uuid import UUID
 from utils import string_to_uuid
 from pprint import pprint
+from backoffice.common.enumerations import JobBranches
 
 
 class Vacature(models.Model):
@@ -53,6 +54,7 @@ class VacatureFeatures(models.Model):
     code = models.CharField(max_length=8),
     #jobBranches =  models.ManyToManyField(JobBranches)
     #regions =  models.CharField(max_length=10, choices=JOBBRANCHES)
+    jobBranches = models.CharField(max_length=8, choices=JobBranches.choices())
     vacatureId = models.OneToOneField(Vacature, default=uuid.uuid4, on_delete=models.CASCADE, primary_key=True, parent_link=True)
 
 '''
