@@ -5,3 +5,7 @@ class JobBranches(ChoiceEnum):
     Financieel = "JB.02"
     ICT = "JB.03"
     Telecom = "JB.04"
+
+class Organisations(ChoiceEnum):
+    Gemeente_X = "x"
+    Gemeente_Y = "y"

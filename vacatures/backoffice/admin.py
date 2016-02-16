@@ -7,6 +7,12 @@ from uuid import UUID
 import uuid
 from utils import string_to_uuid
 from django.contrib import messages
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
+
+from backoffice.models import UserWithOrganisation
+
 
 def publish(modeladmin, request, queryset):
     queryset.update(datePublished = timezone.now())
@@ -40,7 +46,7 @@ class VacatureAdmin(admin.ModelAdmin):
         #if 'owner' in form.changed_data:
         #messages.add_message(request, messages.SUCCESS, 'Car has been sold')
         super(VacatureAdmin, self).save_model(request, obj, form, change)
-    
+
 publish.short_description = "Toevoegen op frontoffice"
 unPublish.short_description = "Verwijder op frontoffice"
 
